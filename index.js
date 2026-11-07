@@ -78,7 +78,7 @@ app.get("/", (req, res) => res.send({ message: "Social Events API is running" })
 // Home page: recent upcoming events (limit)
 app.get("/events/upcoming", async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 6;
+    const limit = Math.min(parseInt(req.query.limit) || 6, 50); || 6;
     const result = await (await eventsCol())
       .find({ eventDate: { $gte: todayStr() } })
       .sort({ eventDate: 1 })
