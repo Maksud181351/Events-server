@@ -71,14 +71,16 @@ function validateEvent(body) {
 }
 
 /* ---------- Routes ---------- */
+
 app.get("/", (req, res) => res.send({ message: "Social Events API is running" }));
+app.get("/health", (req, res) => res.send({ status: "ok", time: new Date() }));
 
 /* ===== PUBLIC: Events ===== */
 
 // Home page: recent upcoming events (limit)
 app.get("/events/upcoming", async (req, res) => {
   try {
-    const limit = Math.min(parseInt(req.query.limit) || 6, 50); || 6;
+    const limit = Math.min(parseInt(req.query.limit) || 6, 50);
     const result = await (await eventsCol())
       .find({ eventDate: { $gte: todayStr() } })
       .sort({ eventDate: 1 })
@@ -263,7 +265,7 @@ app.get("/joins", verifyJWT, async (req, res) => {
 });
 
 // User ei event e already joined kina
-app.get("/joins/check/:eventId", verifyJWT, async (req, res) =>app.get("/health", (req, res) => res.send({ status: "ok", time: new Date() })); {
+app.get("/joins/check/:eventId", verifyJWT, async (req, res) => {
   try {
     const found = await (await joinsCol()).findOne({
       eventId: req.params.eventId,
