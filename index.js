@@ -263,7 +263,7 @@ app.get("/joins", verifyJWT, async (req, res) => {
 });
 
 // User ei event e already joined kina
-app.get("/joins/check/:eventId", verifyJWT, async (req, res) => {
+app.get("/joins/check/:eventId", verifyJWT, async (req, res) =>app.get("/health", (req, res) => res.send({ status: "ok", time: new Date() })); {
   try {
     const found = await (await joinsCol()).findOne({
       eventId: req.params.eventId,
